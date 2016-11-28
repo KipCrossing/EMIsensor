@@ -17,7 +17,8 @@ turns = 1000
 def small_flux_dencity(dl_point, dl, focus_point):
     dj = np.subtract(focus_point, dl_point)
 
-    dB = np.dot((permeability / (4.0 * pi)) * I*turns/(np.linalg.norm(dj)**2), np.cross(dl, dj))
+    dj_hat = dj/np.linalg.norm(dj)
+    dB = np.dot((permeability / (4.0 * pi)) * I*turns/(np.linalg.norm(dj)**2), np.cross(dl, dj_hat))
 
     return dB
 
@@ -30,12 +31,13 @@ n = int(n)
 
 dl = 2*r*np.tan(pi/n)
 
+print("dl: "+ str(dl))
 
-x = 0
+x = 1
 
 d = [0, 0, -1]
 j = [0, 0, x]           # focus point
-u = 100
+
 sum = [0,0,0]
 for i in range(n):
     px = r*np.cos(i*(2*pi/n))
@@ -44,8 +46,10 @@ for i in range(n):
     v = [px, py, 0]
     v_hat = v/np.linalg.norm(v)
     dl_hat = np.cross(v_hat, d)
+
+
     dl_v = np.dot(dl,dl_hat)
-    # print("Radius vector " + str(v)+" dl: " + str(dl_v))
+    #print("Radius vector " + str(v)+" dl: " + str(dl_v))
 
     b = small_flux_dencity(v,dl_v,j)
     #print(b)

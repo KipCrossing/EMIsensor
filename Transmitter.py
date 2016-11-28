@@ -4,11 +4,23 @@
 
 
 import numpy as np
-from vpython import *
+
 
 # Geometry of coil
 
 pi = np.pi
+# The law of Biot-savant - an approximation
+
+permeability = pi*4*10**(-7)
+I = 1       # current in Amps (A)
+turns = 1000
+def small_flux_dencity(dl_point, dl, focus_point):
+    dj = np.subtract(focus_point, dl_point)
+
+    dB = np.dot((permeability / (4.0 * pi)) * I*turns/(np.linalg.norm(dj)**2), np.cross(dl, dj))
+
+    return dB
+
 
 r = input("Radius: ")
 n = input("Number of slices: ")
@@ -18,28 +30,32 @@ n = int(n)
 
 dl = 2*r*np.tan(pi/n)
 
-v = []
 
+x = 0
+
+d = [0, 0, -1]
+j = [0, 0, x]           # focus point
+u = 100
+sum = [0,0,0]
 for i in range(n):
     px = r*np.cos(i*(2*pi/n))
     py = r*np.sin(i*(2*pi/n))
 
-    v[i] = vector(px,py,0)
+    v = [px, py, 0]
+    v_hat = v/np.linalg.norm(v)
+    dl_hat = np.cross(v_hat, d)
+    dl_v = np.dot(dl,dl_hat)
+    # print("Radius vector " + str(v)+" dl: " + str(dl_v))
 
-    print("px: "+str(px)+" py: "+str(py))
-    print(v[i])
+    b = small_flux_dencity(v,dl_v,j)
+    #print(b)
+    sum = np.add(sum,b)
 
-print("dl: " + str(dl))
-print("actual circumference: " + str(pi*r*2) + "   Approximate circumference: " + str(n*dl))
+print("Sum: " + str(sum))
+
+#print("dl: " + str(dl))
+#print("actual circumference: " + str(pi*r*2) + "   Approximate circumference: " + str(n*dl))
 
 
-# The law of Biot-savant - an approximation10
-
-permeability = pi*4*10**(-7)
-
-I = 1       # current in Amps (A)
-
-radius = 0.1        # Radius of Transmitter coil in (m)
-
-B = (permeability/(4.0*pi))*I
-print("B = " + str(B))
+B = ((permeability*I*turns*(r**2)) /(2.0*((r**2 + x**2)**0.5)**3))
+print(B)

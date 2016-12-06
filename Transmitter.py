@@ -4,6 +4,9 @@
 
 
 import numpy as np
+import TransmitterCoil as T
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 # Geometry of coil
@@ -12,9 +15,11 @@ pi = np.pi
 # The law of Biot-savant - an approximation
 
 permeability = pi*4*10**(-7)
-I = 1       # current in Amps (A)
-turns = 1000
-def small_flux_dencity(dl_point, dl, focus_point):
+#I = 1       # current in Amps (A)
+
+
+def small_flux_dencity(dl_point, dl, focus_point,r,turns):
+    I = T.radius_current(r*1000,turns)
     dj = np.subtract(focus_point, dl_point)
 
     dj_hat = dj/np.linalg.norm(dj)
@@ -29,15 +34,15 @@ def small_flux_dencity(dl_point, dl, focus_point):
 #r = float(r)
 #n = int(n)
 
-r = 1
-n = 100
 
-dl = 2*r*np.tan(pi/n)
+n=100
 
-print("dl: "+ str(dl))
 
-def Flux_dencity(rx,ry,rz):
 
+#print("dl: "+ str(dl))
+
+def Flux_dencity(rx,ry,rz,r,turns):
+    dl = 2 * r * np.tan(pi / n)
     d = [0, 0, -1]		# controles current direction 
     j = [rx, ry, rz]           # focus point
     
@@ -54,18 +59,18 @@ def Flux_dencity(rx,ry,rz):
         dl_v = np.dot(dl,dl_hat)
         #print("Radius vector " + str(v)+" dl: " + str(dl_v))
     
-        b = small_flux_dencity(v,dl_v,j)
+        b = small_flux_dencity(v,dl_v,j,r,turns)
         #print(b)
         sum = np.add(sum,b)
 
     #print("Sum: " + str(sum))
     return sum
 
-print(Flux_dencity(2,0,1))
+print(Flux_dencity(0,0,0.5,100,1))
 
-#print("dl: " + str(dl))
-#print("actual circumference: " + str(pi*r*2) + "   Approximate circumference: " + str(n*dl))
+f = open('output3.csv', 'w')
 
-
-#B = ((permeability*I*turns*(r**2)) /(2.0*((r**2 + 0**2)**0.5)**3))		# where 0 is x 
-#print(B)
+for i in range(1,1000):
+    radius = i/1000.0       # m
+    [q,w,response] = Flux_dencity(0, 0, -0.5, radius,1)
+    f.write(str(radius) + "," + str(response)+"\n")

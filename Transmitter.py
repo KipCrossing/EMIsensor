@@ -18,18 +18,18 @@ permeability = pi*4*10**(-7)
 # Fixed Variables
 V = 12      # max voltage in sine wave
 f = 10000   # Hz
-b = 20      # coil length in mm
-radiusT = 50      # Radius in mm
-turns = 100 # NUmber of turns in the transmitter coil
-n=100       #number of slices
+radiusT = 0.05      # Radius in mm
+LengthT = radiusT   # coil length in mm (L >= 0.8r)
+turns = 500 # NUmber of turns in the transmitter coil
+n = 100       #number of slices
 
 def radius_current():
     # input the radius (a) in mm
-    L = ((((radiusT/25.4)**2)*(turns**2))/(9*(radiusT/25.4)+10*(b/25.4)))/1000000   # inductance in H (Henerys)
+    L = ((((radiusT/0.0254)**2)*(turns**2))/(9*(radiusT/0.0254)+10*(LengthT/0.0254)))/1000000   # inductance in H (Henerys)
 
     XL = 2*np.pi*f*L
 
-    R = (87.85/1000000)*2*np.pi*a*n
+    R = (87.85/1000)*2*np.pi*radiusT*n
 
     Z = ((R**2)+(XL**2))**0.5
     I = V/Z
@@ -49,44 +49,47 @@ def small_flux_dencity(dl_point, dl, focus_point):
     return dB
 
 
-#r = input("Radius: ")
-#n = input("Number of slices: ")
-
-#r = float(r)
-#n = int(n)
 
 
+def Flux_dencity(rx,ry,rz):
 
-def Flux_dencity(rx,ry,rz,r,turns):
-    dl = 2 * r * np.tan(pi / n)
+    dl = 2 * radiusT * np.tan(pi / n)
     d = [0, 0, -1]		# controles current direction 
     j = [rx, ry, rz]           # focus point
     
     sum = [0,0,0]
     for i in range(n):
-        px = r*np.cos(i*(2*pi/n))
-        py = r*np.sin(i*(2*pi/n))
+        px = radiusT*np.cos(i*(2*pi/n))
+        py = radiusT*np.sin(i*(2*pi/n))
     
         v = [px, py, 0]
         v_hat = v/np.linalg.norm(v)
         dl_hat = np.cross(v_hat, d)
-    
-    
+
         dl_v = np.dot(dl,dl_hat)
-        #print("Radius vector " + str(v)+" dl: " + str(dl_v))
-    
-        b = small_flux_dencity(v,dl_v,j,r,turns)
-        #print(b)
+
+        b = small_flux_dencity(v,dl_v,j)
+
         sum = np.add(sum,b)
 
-    #print("Sum: " + str(sum))
     return sum
 
-print(Flux_dencity(0,0,0.5,100,1))
+file = open('contureplot.csv', 'w')
+file.write("x,y,response\n")
+for i in range(-10,11):
+    for k in range(1,11):
+        result = Flux_dencity(i/10,0,k/10.0)
+        print(str(i/10)+","+str(k/10)+","+str(result[0]) + ","+str(result[2]))
+        file.write(str(i/10)+","+str(k/10)+","+str(np.linalg.norm(result)) + "\n")
 
+file.close()
+
+
+'''
 f = open('output3.csv', 'w')
 
 for i in range(1,1000):
-    radius = i/1000.0       # m
+      # m
     [q,w,response] = Flux_dencity(0, 0, -0.5, radius,1)
     f.write(str(radius) + "," + str(response)+"\n")
+'''

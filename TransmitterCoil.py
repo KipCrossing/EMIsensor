@@ -15,7 +15,7 @@ def radius_current():
 
     XL = 2*np.pi*f*L
 
-    R = (87.85/1000000)*2*np.pi*a*n
+    R = (87.85/1000000)*2*np.pi*a*turns
 
     Z = ((R**2)+(XL**2))**0.5
     I = V/Z

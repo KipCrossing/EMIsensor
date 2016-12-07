@@ -2,11 +2,8 @@
 # coil with an oscillating current in it.
 # Kipling Crossing
 
-
 import numpy as np
-import TransmitterCoil as T
-import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 # Geometry of coil
@@ -18,8 +15,32 @@ permeability = pi*4*10**(-7)
 #I = 1       # current in Amps (A)
 
 
-def small_flux_dencity(dl_point, dl, focus_point,r,turns):
-    I = T.radius_current(r*1000,turns)
+# Fixed Variables
+V = 12      # max voltage in sine wave
+f = 10000   # Hz
+b = 20      # coil length in mm
+radiusT = 50      # Radius in mm
+turns = 100 # NUmber of turns in the transmitter coil
+n=100       #number of slices
+
+def radius_current():
+    # input the radius (a) in mm
+    L = ((((radiusT/25.4)**2)*(turns**2))/(9*(radiusT/25.4)+10*(b/25.4)))/1000000   # inductance in H (Henerys)
+
+    XL = 2*np.pi*f*L
+
+    R = (87.85/1000000)*2*np.pi*a*n
+
+    Z = ((R**2)+(XL**2))**0.5
+    I = V/Z
+    # Returns Current in amps
+    return I
+
+
+
+
+def small_flux_dencity(dl_point, dl, focus_point):
+    I = radius_current()
     dj = np.subtract(focus_point, dl_point)
 
     dj_hat = dj/np.linalg.norm(dj)
@@ -35,11 +56,6 @@ def small_flux_dencity(dl_point, dl, focus_point,r,turns):
 #n = int(n)
 
 
-n=100
-
-
-
-#print("dl: "+ str(dl))
 
 def Flux_dencity(rx,ry,rz,r,turns):
     dl = 2 * r * np.tan(pi / n)

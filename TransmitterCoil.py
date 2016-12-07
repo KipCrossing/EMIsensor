@@ -1,16 +1,17 @@
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 # Fixed Variables
 V = 12      # max voltage in sine wave
-f = 0   # Hz
+f = 10000   # Hz
 b = 20      # coil length in mm
+a = 50
+turns = 100
 
-
-def radius_current(a,n):
+def radius_current():
     # input the radius (a) in mm
-    L = ((((a/25.4)**2)*(n**2))/(9*(a/25.4)+10*(b/25.4)))/1000000   # inductance in H (Henerys)
+    L = ((((a/25.4)**2)*(turns**2))/(9*(a/25.4)+10*(b/25.4)))/1000000   # inductance in H (Henerys)
 
     XL = 2*np.pi*f*L
 

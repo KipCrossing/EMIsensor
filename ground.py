@@ -28,7 +28,6 @@ def small_flux_dencity(dl_point, dl, focus_point):
 
 
 
-
 def start_radius_vector(B,R):
     [a,b,c] = B
 
@@ -46,12 +45,11 @@ def start_radius_vector(B,R):
 
 
 
-
 def Flux_dencity(rx, ry, rz):
     d = [0, 0, -1]  # controles current direction
     j = [rx, ry, rz]  # focus point
 
-    sum = [0, 0, 0]
+    Flux = [0, 0, 0]
     for i in range(n):
         g = start_radius_vector(d,r)  # Start vector
         Axis = Transmitter.Flux_dencity(0.5,0,0.25)
@@ -67,7 +65,8 @@ def Flux_dencity(rx, ry, rz):
 
         b = small_flux_dencity(v, dl_v, j)
 
-        sum = np.add(sum, b)
-    return sum
+        Flux = np.add(Flux, b)
+    return Flux
 
 print(Flux_dencity(1,0,0))
+

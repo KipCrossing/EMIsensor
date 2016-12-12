@@ -75,33 +75,33 @@ def Flux_dencity_ground(rx, ry, rz):
         Flux = np.add(Flux, b)
     return Flux
 
+'''
+f = open('output_y0.0.csv', 'w')
+f.write("x,y,vertical,horizontal\n")
 
-f = open('output_layer.csv', 'w')
-#f.write("x,y,vertical,horizontal\n")
-f.write("z,layer\n")
-for k in range(-10, 0):
+for i in range(-50, 101):
+    for k in range(-100, -10):
+        result = Flux_dencity_ground(i/50.0,0.0,k/50.0)
+        if result[2]*(10**20) > -10.0 and result[2]*(10**20) < 10.0:
+            f.write(str(i / 50) + "," + str(k / 50) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
+
+    print(i/50.0)
+
+f.close()
+'''
+
+
+
+fi = open('output_later.csv', 'w')
+
+fi.write("z,layer\n")
+
+for k in range(-30, 1):
     layer = 0
     for i in range(-10, 21):
-        for j in(-10,11):
-            result = Flux_dencity_ground(i/10,0,k/10.0)
+        for j in range(-10,10):
+            result = Flux_dencity_ground(i/10.0,j/10.0,k/10.0)
             layer += result[2]
-            #print(str(i / 10) + "," + str(k / 10) + "," + str(result[0]) + "," + str(result[2]))
-            #f.write(str(i / 10) + "," + str(k / 10) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
-    f.write(str(k / 10) + "," + str(layer) +"\n")
+    fi.write(str(k / 10) + "," + str(layer) + "\n")
     print(k)
-
-f.close()
-
-
-'''
-f = open('output.csv', 'w')
-j=0
-for i in range(0,10):
-    print(i)
-    for k in range(0, 10):
-        result = Flux_dencity(i/10.0,j/10.0,k/10.0)
-        #print(str(i) + "," +str(j) + "," +str(k))
-        f.write(str(i/10.0) +  "," +str(k/10.0) + ","  + str(result[2]) + "\n")
-        #print(str(i/10.0) + "," +str(j/10.0) + "," +str(k/10.0) + "," +str(result[0]) + "," +str(result[1]) + "," +str(result[2]) + "\n")
-f.close()
-'''
+fi.close()

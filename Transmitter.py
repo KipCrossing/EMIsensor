@@ -18,7 +18,7 @@ permeability = pi*4*10**(-7)
 # Fixed Variables
 V = 12      # max voltage in sine wave
 f = 10000   # Hz
-radiusT = 0.005      # Radius in m
+radiusT = 0.02      # Radius in m
 LengthT = radiusT   # coil length in mm (L >= 0.8r)
 turns = 500 # NUmber of turns in the transmitter coil
 n = 100       #number of slices

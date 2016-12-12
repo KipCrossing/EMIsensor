@@ -39,13 +39,17 @@ def start_radius_vector(B,R):
 
 
 
-def Flux_dencity(rx, ry, rz):
+def Flux_dencity_ground(rx, ry, rz):
     # Inputs the position vector at where the reading is being focused
     receiver_position = [1, 0, 0]  # focus point
 
     Flux = [0, 0, 0]
 
     Axis = Transmitter.Flux_dencity(rx, ry, rz)
+
+    Axis_hat = Axis/np.linalg.norm(Axis)
+
+    ground_position = [rx, ry, rz]
 
     g = start_radius_vector(Axis, r)  # Start vector
 
@@ -59,10 +63,10 @@ def Flux_dencity(rx, ry, rz):
 
         v = np.dot(rotation_matrix(Axis, i * (2 * np.pi / n)), g)
 
-        dl_point = np.add(Axis, v)
+        dl_point = np.add(ground_position, v)
 
         v_hat = v / np.linalg.norm(v)
-        dl_hat = np.cross(v_hat, Axis)
+        dl_hat = np.cross(v_hat, Axis_hat)
 
         dl_v = np.dot(dl, dl_hat)
 
@@ -70,12 +74,23 @@ def Flux_dencity(rx, ry, rz):
 
         Flux = np.add(Flux, b)
     return Flux
-for i in range(2,10):
-    for k in range(10):
-        result = Flux_dencity(i/10,0,k/10.0)
-        print(result[2])
 
 
+f = open('output_layer.csv', 'w')
+#f.write("x,y,vertical,horizontal\n")
+f.write("z,layer\n")
+for k in range(-10, 0):
+    layer = 0
+    for i in range(-10, 21):
+        for j in(-10,11):
+            result = Flux_dencity_ground(i/10,0,k/10.0)
+            layer += result[2]
+            #print(str(i / 10) + "," + str(k / 10) + "," + str(result[0]) + "," + str(result[2]))
+            #f.write(str(i / 10) + "," + str(k / 10) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
+    f.write(str(k / 10) + "," + str(layer) +"\n")
+    print(k)
+
+f.close()
 
 
 '''

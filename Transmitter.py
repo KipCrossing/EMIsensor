@@ -18,7 +18,7 @@ permeability = pi*4*10**(-7)
 # Fixed Variables
 V = 12      # max voltage in sine wave
 f = 10000   # Hz
-radiusT = 0.05      # Radius in mm
+radiusT = 0.005      # Radius in m
 LengthT = radiusT   # coil length in mm (L >= 0.8r)
 turns = 500 # NUmber of turns in the transmitter coil
 n = 100       #number of slices
@@ -74,16 +74,20 @@ def Flux_dencity(rx,ry,rz):
 
     return sum
 
+
+''''
 file = open('contureplot.csv', 'w')
 file.write("x,y,response\n")
 for i in range(-10,11):
     for k in range(1,11):
         result = Flux_dencity(i/10,0,k/10.0)
-        print(str(i/10)+","+str(k/10)+","+str(result[0]) + ","+str(result[2]))
-        file.write(str(i/10)+","+str(k/10)+","+str(np.linalg.norm(result)) + "\n")
+
+        print(result)
+        #print(str(i/10)+","+str(k/10)+","+str(result[0]) + ","+str(result[2]))
+        #file.write(str(i/10)+","+str(k/10)+","+str(np.linalg.norm(result)) + "\n")
 
 file.close()
-
+'''
 
 '''
 f = open('output3.csv', 'w')

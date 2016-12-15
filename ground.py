@@ -1,14 +1,14 @@
 import numpy as np
 from Euler import rotation_matrix
 import Transmitter
+import _thread
 
 permeability = np.pi * 4 * 10 ** (-7)
 
 turns = 1
 
 r = 0.01       # radius of eddy currents in m
-
-n = 100         # number of slices
+n = 200         # number of slices
 
 
 def small_flux_dencity(dl_point, dl, focus_point, I):
@@ -75,33 +75,33 @@ def Flux_dencity_ground(rx, ry, rz):
         Flux = np.add(Flux, b)
     return Flux
 
-'''
-f = open('output_y0.0.csv', 'w')
+
+f = open('output_y0.2.csv', 'w')
 f.write("x,y,vertical,horizontal\n")
+m = 20
 
-for i in range(-50, 101):
-    for k in range(-100, -10):
-        result = Flux_dencity_ground(i/50.0,0.0,k/50.0)
-        if result[2]*(10**20) > -10.0 and result[2]*(10**20) < 10.0:
-            f.write(str(i / 50) + "," + str(k / 50) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
+for i in range(-1*m, 3*m+1):
+    for k in range(-2*m, -1):
+        result = Flux_dencity_ground(i/float(m),0.2,k/float(m))
+        f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
 
-    print(i/50.0)
+    print(i/float(m))
 
 f.close()
+
 '''
-
-
 
 fi = open('output_later.csv', 'w')
 
 fi.write("z,layer\n")
 
-for k in range(-30, 1):
+for k in range(-10, 0):
     layer = 0
-    for i in range(-10, 21):
-        for j in range(-10,10):
-            result = Flux_dencity_ground(i/10.0,j/10.0,k/10.0)
-            layer += result[2]
-    fi.write(str(k / 10) + "," + str(layer) + "\n")
+    for i in range(-10, 31):
+        for j in range(-2, 3):
+            result = Flux_dencity_ground(i/10.0,j/10.0,k/20.0)
+            layer += result[0]
+    fi.write(str(k / 20.0) + "," + str(layer) + "\n")
     print(k)
 fi.close()
+'''

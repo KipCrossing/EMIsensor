@@ -4,6 +4,7 @@
 
 import numpy as np
 #import matplotlib.pyplot as plt
+from Euler import rotation_matrix
 
 
 # Geometry of coil
@@ -18,10 +19,10 @@ permeability = pi*4*10**(-7)
 # Fixed Variables
 V = 12      # max voltage in sine wave
 f = 10000   # Hz
-radiusT = 0.02      # Radius in m
+radiusT =0.05      # Radius in m
 LengthT = radiusT   # coil length in mm (L >= 0.8r)
 turns = 500 # NUmber of turns in the transmitter coil
-n = 100       #number of slices
+n = 500       #number of slices
 
 def radius_current():
     # input the radius (a) in mm
@@ -54,28 +55,53 @@ def small_flux_dencity(dl_point, dl, focus_point):
 def Flux_dencity(rx,ry,rz):
 
     dl = 2 * radiusT * np.tan(pi / n)
-    d = [0, 0, -1]		# controles current direction 
+    Axis = [0, 0, -1]		# controles current direction
+    Axis_hat = Axis/np.linalg.norm(Axis)
+    Transmitter_position = [0,0,0]
+
+    g = [0,radiusT,0]
+
     j = [rx, ry, rz]           # focus point
     
     sum = [0,0,0]
     for i in range(n):
-        px = radiusT*np.cos(i*(2*pi/n))
-        py = radiusT*np.sin(i*(2*pi/n))
-    
-        v = [px, py, 0]
-        v_hat = v/np.linalg.norm(v)
-        dl_hat = np.cross(v_hat, d)
+        v = np.dot(rotation_matrix(Axis, i * (2 * np.pi / n)), g)
 
-        dl_v = np.dot(dl,dl_hat)
+        dl_point = np.add(Transmitter_position, v)
 
-        b = small_flux_dencity(v,dl_v,j)
+        v_hat = v / np.linalg.norm(v)
+        dl_hat = np.cross(v_hat, Axis_hat)
 
-        sum = np.add(sum,b)
+        dl_v = np.dot(dl, dl_hat)
+
+        b = small_flux_dencity(dl_point, dl_v, j)
+
+        sum = np.add(sum, b)
+
+    Axis2 = [0, 0, 1]  # controles current direction
+    Axis_hat2 = Axis2 / np.linalg.norm(Axis2)
+    Transmitter_position2 = [2, 0, 0]
+
+
+    for i in range(n):
+        v = np.dot(rotation_matrix(Axis2, i * (2 * np.pi / n)), g)
+
+        dl_point = np.add(Transmitter_position2, v)
+
+        v_hat = v / np.linalg.norm(v)
+        dl_hat = np.cross(v_hat, Axis_hat2)
+
+        dl_v = np.dot(dl, dl_hat)
+
+        b = small_flux_dencity(dl_point, dl_v, j)
+
+        sum = np.add(sum, b)
 
     return sum
 
+#print(Flux_dencity(1,0,1))
 
-''''
+'''
 file = open('contureplot.csv', 'w')
 file.write("x,y,response\n")
 for i in range(-10,11):

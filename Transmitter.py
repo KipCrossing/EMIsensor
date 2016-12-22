@@ -19,10 +19,10 @@ permeability = pi*4*10**(-7)
 # Fixed Variables
 V = 12      # max voltage in sine wave
 f = 10000   # Hz
-radiusT =0.05      # Radius in m
+radiusT =0.95      # Radius in m
 LengthT = radiusT   # coil length in mm (L >= 0.8r)
 turns = 500 # NUmber of turns in the transmitter coil
-n = 500       #number of slices
+n = 1000       #number of slices
 
 def radius_current():
     # input the radius (a) in mm
@@ -52,10 +52,12 @@ def small_flux_dencity(dl_point, dl, focus_point):
 
 
 
-def Flux_dencity(rx,ry,rz):
+def Flux_dencity(rx,ry,rz, tuple):
+
+    (Axis, Axis2) = tuple
 
     dl = 2 * radiusT * np.tan(pi / n)
-    Axis = [0, 0, -1]		# controles current direction
+
     Axis_hat = Axis/np.linalg.norm(Axis)
     Transmitter_position = [0,0,0]
 
@@ -78,28 +80,33 @@ def Flux_dencity(rx,ry,rz):
 
         sum = np.add(sum, b)
 
-    Axis2 = [0, 0, 1]  # controles current direction
-    Axis_hat2 = Axis2 / np.linalg.norm(Axis2)
-    Transmitter_position2 = [2, 0, 0]
 
 
-    for i in range(n):
-        v = np.dot(rotation_matrix(Axis2, i * (2 * np.pi / n)), g)
 
-        dl_point = np.add(Transmitter_position2, v)
+    if Axis2 != None:
 
-        v_hat = v / np.linalg.norm(v)
-        dl_hat = np.cross(v_hat, Axis_hat2)
+        Axis_hat2 = Axis2 / np.linalg.norm(Axis2)
+        Transmitter_position2 = [2, 0, 0]
 
-        dl_v = np.dot(dl, dl_hat)
+        for i in range(n):
+            v = np.dot(rotation_matrix(Axis2, i * (2 * np.pi / n)), g)
 
-        b = small_flux_dencity(dl_point, dl_v, j)
+            dl_point = np.add(Transmitter_position2, v)
 
-        sum = np.add(sum, b)
+            v_hat = v / np.linalg.norm(v)
+            dl_hat = np.cross(v_hat, Axis_hat2)
+
+            dl_v = np.dot(dl, dl_hat)
+
+            b = small_flux_dencity(dl_point, dl_v, j)
+
+            sum = np.add(sum, b)
 
     return sum
 
-#print(Flux_dencity(1,0,1))
+
+
+
 
 '''
 file = open('contureplot.csv', 'w')

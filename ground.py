@@ -2,13 +2,14 @@ import numpy as np
 from Euler import rotation_matrix
 import Transmitter
 import _thread
+import time
 
 permeability = np.pi * 4 * 10 ** (-7)
 
 turns = 1
 
 r = 0.01       # radius of eddy currents in m
-n = 200         # number of slices
+n = 1000         # number of slices
 
 
 def small_flux_dencity(dl_point, dl, focus_point, I):
@@ -39,13 +40,13 @@ def start_radius_vector(B,R):
 
 
 
-def Flux_dencity_ground(rx, ry, rz):
+def Flux_dencity_ground(rx, ry, rz, tuple):
     # Inputs the position vector at where the reading is being focused
     receiver_position = [1, 0, 0]  # focus point
 
     Flux = [0, 0, 0]
 
-    Axis = Transmitter.Flux_dencity(rx, ry, rz)
+    Axis = Transmitter.Flux_dencity(rx, ry, rz, tuple)
 
     Axis_hat = Axis/np.linalg.norm(Axis)
 
@@ -76,32 +77,80 @@ def Flux_dencity_ground(rx, ry, rz):
     return Flux
 
 
-f = open('output_y0.2.csv', 'w')
-f.write("x,y,vertical,horizontal\n")
-m = 20
 
-for i in range(-1*m, 3*m+1):
-    for k in range(-2*m, -1):
-        result = Flux_dencity_ground(i/float(m),0.2,k/float(m))
-        f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0]*(10**20)) + "," + str(result[2]*(10**20))+ "\n")
 
-    print(i/float(m))
 
-f.close()
+configuration  = [([0,0,1],[0,0,1]),([0,0,1],[0,0,-1]),([0,0,1],None),([0,1,0],[0,1,0]),([0,1,0],[0,-1,0]),([0,-1,0],None),([1,0,0],[1,0,0]),([1,0,0],[-1,0,0]),([1,0,0],None),([1, 0, 1], [-1, 0, 1])]
 
-'''
 
-fi = open('output_later.csv', 'w')
+for tuple in configuration:
 
-fi.write("z,layer\n")
+    start = time.time()
+    print(str(tuple))
 
-for k in range(-10, 0):
-    layer = 0
-    for i in range(-10, 31):
-        for j in range(-2, 3):
-            result = Flux_dencity_ground(i/10.0,j/10.0,k/20.0)
-            layer += result[0]
-    fi.write(str(k / 20.0) + "," + str(layer) + "\n")
-    print(k)
-fi.close()
-'''
+
+    f = open('1Ddepth/'+str(tuple)+'.csv', 'w')
+    for k in range(-10, 1):
+        layerx = 0
+        layery = 0
+        layerz = 0
+        for i in range(-10, 31):
+            for j in range(-2, 3):
+                result = Flux_dencity_ground(i / 10.0, j / 10.0, k / 20.0,tuple)
+                layerx += result[0]
+                layery += result[1]
+                layerz += result[2]
+        f.write(str(k / 20.0) + "," + str(layerx)+ "," + str(layery)+ "," + str(z) + "\n")
+    f.close()
+
+
+    f = open('2Dfield/0m/' + str(tuple) + '.csv', 'w')
+    f.write("x,y,vertical,horizontal\n")
+    m = 10
+    for i in range(-1 * m, 3 * m + 1):
+        for k in range(-2 * m, 0):
+            result = Transmitter.Flux_dencity(i / float(m), 0.0, k / float(m), tuple)
+            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0]) + "," + str(
+                result[2] ) + "\n")
+    f.close()
+
+
+
+    f = open('2Dfield/0.2m/' + str(tuple) + '.csv', 'w')
+    f.write("x,y,vertical,horizontal\n")
+    m = 10
+    for i in range(-1 * m, 3 * m + 1):
+        for k in range(-2 * m, 0):
+            result = Transmitter.Flux_dencity(i / float(m), 0.2, k / float(m),tuple)
+            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0] ) + "," + str(
+                result[2] ) + "\n")
+    f.close()
+
+
+
+    f = open('2Dresponse/0m/' + str(tuple) + '.csv', 'w')
+
+    f.write("x,y,Rx,Ry,Rz\n")
+    m = 20
+    for i in range(-1 * m, 3 * m + 1):
+        for k in range(-2 * m, 1):
+            result = Flux_dencity_ground(i / float(m), 0.0, k / float(m),tuple)
+            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0] )+ "," + str(result[1] ) + "," + str(
+                result[2] ) + "\n")
+    f.close()
+
+    f = open('2Dresponse/0.2m/' + str(tuple) + '.csv', 'w')
+    f.write("x,y,Rx,Ry,Rz\n")
+    m = 20
+    for i in range(-1 * m, 3 * m + 1):
+        for k in range(-2 * m, 1):
+            result = Flux_dencity_ground(i / float(m), 0.2, k / float(m),tuple)
+            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result[0])+ "," + str(result[1] ) + "," + str(
+                result[2]) + "\n")
+    f.close()
+
+    end = time.time()
+
+    print("Time: "+str((end - start)/60.0)+" minutes")
+
+

@@ -100,7 +100,7 @@ for tuple in configuration:
                 layerx += result[0]
                 layery += result[1]
                 layerz += result[2]
-        f.write(str(k / 20.0) + "," + str(layerx)+ "," + str(layery)+ "," + str(z) + "\n")
+        f.write(str(k / 20.0) + "," + str(layerx)+ "," + str(layery)+ "," + str(layerz) + "\n")
     f.close()
 
 

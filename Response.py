@@ -1,8 +1,10 @@
 import numpy as np
 from Euler import rotation_matrix
+import time
+
 
 Tx = [0,0,1]
-Rx = [1,0,0]
+Rx = [0,0,1]
 
 
 EC = 25
@@ -12,8 +14,8 @@ S = [1, 0, 0]
 turns = 1
 
 
-RTx = 0.05
-n = 1000         # number of slices
+RTx = 0.025
+n = 100            # number of slices
 
 r = [0.5, 0, 0.5]
 
@@ -81,26 +83,26 @@ def Flux_dencity(Axis, Tx_position, RTx, r):
 
     return sum
 
-
-
-
-f = open('OUTPUT.csv', 'w')
-f.write("x,y,result\n")
-
-m = 10
 Rx_position = [1,0,0]
+m = 20
 Re = 1.0/(2*float(m))
 Hp = Flux_dencity((Tx, [0,0,-1]),([0,0,0],[2,0,0]),0.05,Rx_position)
 bottom = np.dot(Rx,Hp)
+
+
+f = open('OUTPUT_H.csv', 'w')
+f.write("x,y,result\n")
+
 for k in range(-2 * m, 0):
     for i in range(-1 * m, 3 * m + 1):
-        r = [i,0.0,k]
-        Hr = Flux_dencity((Tx, [0,0,-1]),([0,0,0],[2,0,0]),0.05,r)
-        Hs = Flux_dencity((Hr, None),(r,None),Re,Rx_position)*10**8     # Check for magnitude of Hr in Flux_dencity()
+        r = [float(i)/m,0.0,float(k)/m]
+        Hr = Flux_dencity((Tx, None),([0,0,0],None),0.05,r)
+        Hs = Flux_dencity((Hr, None),(r,None),Re,Rx_position)     # Check for magnitude of Hr in Flux_dencity()
 
-        result = np.dot(Rx,Hs) #/ np.dot(Rx,Hp)          # np.linalg.norm(Hr)*
-        #print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(Hr))
+        result = (np.linalg.norm(Hr)*(np.dot(Rx,Hs)/ np.dot(Rx,Hp)))*0.0000000001           # Change factor
+        #print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
         f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
-
+    print(k)
 f.close()
+
 

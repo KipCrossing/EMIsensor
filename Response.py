@@ -77,29 +77,29 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-RTx = 0.025  # Tx radius
+RTx = 0.015  # Tx radius
 
-m = 40
+m = 20
 Re = 1.0/(2*float(m))
 
-configuration = [(([0,0,1],[0,0,0]),None,([0,0,1],[1,0,0]))]   #,(([-1,0,1],[0,0,0]),None,([1,0,1],[1,0,0]))]
+configuration = [(([0,-1,0],[0,0,RTx]),None,([0,-1,0],[1,0,RTx])),(([0,0,1],[0,0,0]),None,([0,0,1],[1,0,0]))]  #,(([-1,0,1],[0,0,0]),None,([1,0,1],[1,0,0]))]
 
 for tuple in configuration:
     (Tx1,Tx2,Rx) = tuple
     (Rx_axis, Rx_position) = Rx
     Hp = Flux_dencity(Tx1, Tx2, 0.05, Rx_position)
     '''
-    f = open('2D_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
+    f = open('2D-0.2_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
     f.write("x,y,result\n")
 
     for k in range(-2 * m, 0):
-        for i in range(-1 * m, 3 * m + 1):
-            r = [float(i) / m, 0.0, float(k) / m]
+        for i in range(-1 * m, 2 * m + 1):
+            r = [float(i) / m, -0.2, float(k) / m]
             try:
                 Hr = Flux_dencity(Tx1, Tx2, 0.05, r)
                 Hs = Flux_dencity((Hr, r), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
 
-                result = (np.linalg.norm(Hr) * (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp)))   # Change factor
+                result = (np.linalg.norm(Hr) * (np.dot(Rx_axis, Hs)*Re**2 / np.dot(Rx_axis, Hp)))   # Change factor
                 # print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
                 f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
             except RuntimeWarning:
@@ -111,24 +111,24 @@ for tuple in configuration:
     '''
 
 
-    f = open('1D_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
+    f = open('1D_0.1_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
     f.write("x,y,result\n")
 
     for k in range(-1 * m, 0):
         layer = 0
         for i in range(-1 * m, 2 * m + 1):
-            for j in range(-1 * m, 1 * m):
+            for j in range(-1 * m, 1 * m+1):
                 r = [float(i) / m, float(j) / m, float(k) / m]
                 try:
                     Hr = Flux_dencity(Tx1, Tx2, 0.05, r)
-                    Hs = Flux_dencity((Hr, [0,0,-1]), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
+                    Hs = Flux_dencity((Hr, r), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
 
-                    layer += np.dot([0,0,-1],Hr) * (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp))  # Change factor
+                    layer += np.linalg.norm(Hr)* (np.dot(Rx_axis, Hs)*Re**2 / np.dot(Rx_axis, Hp))  # Change factor
                     # print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
 
                 except RuntimeWarning:
                     print("Error")
                     pass
-        print(k)
+        print(str(k / float(m))+ ', ' +str(layer))
         f.write(str(k / float(m)) + "," + str(layer) + "\n")
     f.close()

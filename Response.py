@@ -79,19 +79,19 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-RTx = 0.05  # Tx radius
+RTx = 0.05  # Tx radius (m)
 
 m = 80
 Re = 1.0/(2*float(m))
 
-configuration = [(([0,1,0],[1/(-m*2),-1/(m*2),1/(m*2)]),None,([0,1,0],[1-1/(m*2),-1/(m*2),1/(m*2)])),(([0,0,1],[1/(-m*2),-1/(m*2),1/(m*2)]),None,([0,0,1],[1-1/(m*2),-1/(m*2),1/(m*2)]))]
+configuration = [(([0,1,0],[1/(-m*2),-1/(m*2),1/(m*2)]),None,([0,1,0],[1-1/(m*2),-1/(m*2),1/(m*2)]))]
 
 for tuple in configuration:
-    (Tx1, Tx2, Rx) = tuple
+    (Tx1, Tx2, Rx) = tuple      #Tx is is the transmitter coils, Rx is the receiver coils.
     (Rx_axis, Rx_position) = Rx
     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
     print("ONE")
-    '''
+
     f = open('2D-0.2_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
     f.write("x,y,result\n")
 
@@ -132,3 +132,4 @@ for tuple in configuration:
         print(str(k / float(m))+ ', ' +str(layer))
         f.write(str(k / float(m)) + "," + str(layer) + "\n")
     f.close()
+    '''

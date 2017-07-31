@@ -3,7 +3,6 @@ from Euler import rotation_matrix
 import time
 
 
-
 n = 32            # number of slices
 
 EC = 25
@@ -79,11 +78,14 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-RTx = 0.05  # Tx radius (m)
 
-m = 80
 
-configurations = [(([0,0,1],[0,0,0]),None,([0,0,1],[m,0,0]))]       #A list containing the configurations wanting to be analysed
+RTx = 0.02  # Tx radius (m)
+
+m = 20
+Re = 1.0/(2*float(m))
+y_offset = 0.0
+configurations = [(([0,0,1],[0,0,0]),None,([0,0,1],[2,0,0]))]       #A list containing the configurations wanting to be analysed
 
 for config in configurations:
     (Tx1, Tx2, Rx) = config      #Tx is is the transmitter coils, Rx is the receiver coils.
@@ -93,31 +95,53 @@ for config in configurations:
     print("ONE")
 
 
+    k_file = open('3D_Current_dL'+str(y_offset)+'_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
 
-    f = open('2D-0.2_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
+
+    f = open('2D-'+str(y_offset)+'_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
     f.write("x,y,result\n")
 
-    for k in range(-2 * m, 0):
+
+    for k in range(-1 * m, 0):
         for i in range(-1 * m, 2 * m + 1):
-            r = [float(i) / m, -0.2, float(k) / m]
+            r = [float(i) / m, y_offset, float(k) / m]
+
+
             try:
-                Hr = Flux_dencity(Tx1, Tx2, 0.05, r)
+                Hr = Flux_dencity(Tx1, Tx2, RTx, r)
+
+
                 #Hs = Flux_dencity((Hr, r), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
+                holder = np.cross(r,Hr)
+                dL_hat = holder/np.linalg.norm(holder)
+                Current = np.dot(np.linalg.norm(Hr), dL_hat)
 
-                r_hat = r / np.linalg.norm(r)
-
-
-                GroundI = np.cross(r_hat,Hr)        #Need to include ground resistance
-
-                Hs = small_flux(r,GroundI,Rx_position)
-
+                Hs = np.dot(np.linalg.norm(Hr),small_flux(r, Current,Rx_position))
                 result = (np.linalg.norm(Hr) * (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp)))   # Change factor
-                # print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
+
+                #print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
                 f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
             except RuntimeWarning:
                 print("Error")
                 pass
         print(k)
+    f.close()
+
+    # Simple 2D
+
+
+    f = open('Simple-2D'+'.csv', 'w')
+    f.write("x,y,result\n")
+    for k in range(-1 * m, 0):
+        sum = 0
+        for i in range(-1 * m, 2 * m + 1):
+            r = [float(i) / m, y_offset, float(k) / m]
+            result = (1/(np.linalg.norm(r)**2))*(1/(np.linalg.norm(np.subtract([1, 0, 0], r)**2)))
+            if float(i) / m < 0 or float(i) / m > 1:
+                result = -result
+            sum += result
+            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
+        print(sum)
     f.close()
 
 
@@ -128,30 +152,23 @@ for config in configurations:
 
     for k in range(-1* m, 1):
         layer = 0
-        for i in range(-6 * m, 7 * m):
-            for j in range(-6 * m, 6*m):
+        for i in range(-1 * m, 2 * m):
+            for j in range(-1 * m, 1*m):
                 r = [float(i) / m, float(j) / m, float(k) / m]
-
+                [x,y,z] = r
                 Hr = Flux_dencity(Tx1, Tx2, RTx, r)     #RTx is the Radius of Tx - r is the position of the point in question
+                holder = np.cross(r, Hr)
+                dL_hat = holder / np.linalg.norm(holder)
+                Current = np.dot(np.linalg.norm(Hr),dL_hat)
+                #print(str(r)+" - "+str(np.linalg.norm(Hr)))
+                [u, v, w] = Current
 
-                r_hat = r / np.linalg.norm(r)
+                k_file.write("%s ,%s ,%s ,%s ,%s ,%s \n" % (x, y, z, u, v, w))
+
+                Hs = np.dot(np.linalg.norm(Hr),small_flux(r, Current,Rx_position))
 
 
-                GroundI = np.cross(r_hat,Hr)        #Need to include ground resistance
-
-                Hs = small_flux(r,GroundI,Rx_position)
-
-
-
-                layer += np.linalg.norm(Hr)* (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp))  # Change factor
-                '''
-                if i < 0:
-                    if np.dot(Rx_axis, Hs) >0:
-                        print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(np.dot(Rx_axis, Hs)))
-                if i > 0:
-                    if np.dot(Rx_axis, Hs) < 0:
-                        print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(np.dot(Rx_axis, Hs)))
-                '''
+                layer += np.linalg.norm(Hr)* (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp))  # Change factor - be sure that we include ohms law in the calculations
 
 
         print(str(k / float(m))+ ', ' +str(layer))

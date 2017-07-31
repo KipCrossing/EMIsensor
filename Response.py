@@ -81,7 +81,7 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
 
 RTx = 0.05  # Tx radius (m)
 
-m = 80
+m = 40
 Re = 1.0/(2*float(m))
 
 configuration = [(([0,1,0],[1/(-m*2),-1/(m*2),1/(m*2)]),None,([0,1,0],[1-1/(m*2),-1/(m*2),1/(m*2)]))]
@@ -92,7 +92,7 @@ for tuple in configuration:
     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
     print("ONE")
 
-    f = open('2D-0.2_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
+    f = open('2D-0.2WORD_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
     f.write("x,y,result\n")
 
     for k in range(-2 * m, 0):
@@ -103,7 +103,7 @@ for tuple in configuration:
                 Hs = Flux_dencity((Hr, r), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
 
                 result = (np.linalg.norm(Hr) * (np.dot(Rx_axis, Hs)*Re**2 / np.dot(Rx_axis, Hp)))   # Change factor
-                # print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
+                #print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
                 f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
             except RuntimeWarning:
                 print("Error")

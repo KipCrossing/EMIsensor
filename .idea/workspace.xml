@@ -2,37 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66748eb9-3dd9-4a12-854e-2365f00c30b6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0m/Recent Activity _ Western Union.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1Ddepth/((0, 0, 1), None).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2D-0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0.2m/([0, 1, 0], None).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0m/([0, 1, 0], None).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dresponse/0.2m/([0, 1, 0], None).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dresponse/0m/([0, 1, 0], None).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.025, -0.025, 0.025])_None_([0, 0, 1], [19.975, -0.025, 0.025]).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.05, -0.05, 0.05])_None_([0, 0, 1], [9.95, -0.05, 0.05]).csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.1, -0.1, 0.1])_None_([0, 0, 1], [4.9, -0.1, 0.1]).csv" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=10_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [10, 0, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=20_([0, 0, 1], [-1, -1, 0])_None_([0, 0, 1], [1, -1, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=20_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [20, 0, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=20_([0, 1, 0], [-1, -1, 0])_None_([0, 1, 0], [1, -1, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=80_([0, 0, 1], [-1, -1, 0])_None_([0, 0, 1], [1, -1, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=80_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [80, 0, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [10, 0, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [80, 0, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.2_([0, 1, 0], [-1, -1, 0])_None_([0, 1, 0], [1, -1, 0]).csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Depth_response_y0.0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Depth_response_y0.2_double.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Depth_response_y0.2_double1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Depth_response_y0.pgw" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/OUTPUT.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/contureplot.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/EMIsensor.iml" afterPath="$PROJECT_DIR$/.idea/EMIsensor.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1D_0.05_m=20_([0, 0, 1], [0.1, 0.1, 0.1])_None_([0, 0, 1], [1.1, 0.1, 0.1]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Current_dL0.0_([0, 0, 1], [0.1, 0.1, 0.1])_None_([0, 0, 1], [1.1, 0.1, 0.1]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1D_0.05_m=10_([0, 0, 1], [0.2, 0.2, 0.2])_None_([0, 0, 1], [1.2, 0.2, 0.2]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1D_0.05_m=10_([0, 0, 1], [5.0, 5.0, 5.0])_None_([0, 0, 1], [6.0, 5.0, 5.0]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0.2m/([0, 0, -1], None).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0.2m/([1, 0, 0], [-1, 0, 1]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/2Dfield/0m/([1, 0, 0], [-1, 0, 1]).csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/3D_Current_dL0.0_([0, 0, 1], [0.2, 0.2, 0.2])_None_([0, 0, 1], [1.2, 0.2, 0.2]).csv" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.~lock.output.csv#" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=20_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=20_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [2, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/1D_0.05_m=4_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.0_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.0_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [2, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/2D-0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Current_dL0.0_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Current_dL0.0_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [2, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Current_dL0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.025, -0.025, 0.025])_None_([0, 0, 1], [19.975, -0.025, 0.025]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.05, -0.05, 0.05])_None_([0, 0, 1], [9.95, -0.05, 0.05]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [-0.1, -0.1, 0.1])_None_([0, 0, 1], [4.9, -0.1, 0.1]).csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vectorplot.csv" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/3D_Field_0.2_([0, 0, 1], [0, 0, 0])_None_([0, 0, 1], [1, 0, 0]).csv" afterPath="$PROJECT_DIR$/kip/output_y0.2.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Response.py" afterPath="$PROJECT_DIR$/Response.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Untitled.ipynb" afterPath="$PROJECT_DIR$/Untitled.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Simple-2D.csv" afterPath="$PROJECT_DIR$/Simple-2D.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphit.ipynb" afterPath="$PROJECT_DIR$/graphit.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
@@ -55,8 +49,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="162" column="60" selection-start-line="162" selection-start-column="60" selection-end-line="162" selection-end-column="60" />
+            <state relative-caret-position="310">
+              <caret line="202" column="32" selection-start-line="202" selection-start-column="32" selection-end-line="202" selection-end-column="32" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -68,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/graphit.ipynb">
           <provider selected="true" editor-type-id="ipnb-editor">
             <state>
-              <selected id="1" />
+              <selected id="0" />
             </state>
           </provider>
         </entry>
@@ -352,26 +346,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1932" height="1056" extended-state="1" />
-    <editor active="true" />
+    <frame x="-8" y="0" width="1932" height="1056" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13146779" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14836325" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32142857" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32142857" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -391,6 +385,40 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphit.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphit.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1445">
@@ -524,8 +552,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="162" column="60" selection-start-line="162" selection-start-column="60" selection-end-line="162" selection-end-column="60" />
+        <state relative-caret-position="310">
+          <caret line="202" column="32" selection-start-line="202" selection-start-column="32" selection-end-line="202" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

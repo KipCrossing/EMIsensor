@@ -71,12 +71,13 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-RTx = 0.02  # Tx radius (m)
+RTx = 0.015  # Tx radius (m)
 
 m = 20
 Re = 1.0 / (2 * float(m))
 y_offset = 0.0
-configurations = [(([0, 0, 1], [1 / m * 2, 1 / m * 2, 1 / m * 2]), None, (
+
+configurations = [(([0, 0, 1], [1 / m * 2, 1 / m * 2, 1 / m * 2]), ([0, 0, 1], [1 / m * 2, 1 / m * 2, 0.15 + 1 / m * 2]), (
 [0, 0, 1], [1 + 1 / m * 2, 1 / m * 2, 1 / m * 2]))]  # A list containing the configurations wanting to be analysed
 
 for config in configurations:
@@ -84,7 +85,7 @@ for config in configurations:
     (Rx_axis, Rx_position) = Rx
     (Axis1, Tx_position1) = Tx1
     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
-    print("ONE")
+    print("tick")
 
 
 
@@ -144,12 +145,12 @@ for config in configurations:
 
     '''
 
-    print("TWO")
+    print("tock")
 
 
     k_file = open('3D_Current_dL' + str(y_offset) + '_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
 
-    f = open('1D_0.05_m='+str(m)+'_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
+    f = open('1D_TODAY='+str(m)+'_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
     f.write("z,result\n")
 
     for k in range(-2*m, 0):
@@ -159,6 +160,7 @@ for config in configurations:
                 r = [float(i) / m, float(j) / m, float(k) / m]
                 [x, y, z] = r
                 Hr = Flux_dencity(Tx1, Tx2, RTx, r)     # RTx is the Radius of Tx - r is the position of the point in question
+                #print(Hr)
                 holder = np.cross(r, Hr)
                 dL_hat = holder / np.linalg.norm(holder)
                 Current = np.dot(np.linalg.norm(Hr),dL_hat)
@@ -196,7 +198,7 @@ the_z = 0
 sum = None
 for [x, y, z, u, v, w] in plot_vector:
     coord = [x, y, z]
-    current = [u, v, w]
+    current = [u, v, w] 
 
     r = np.subtract(Rx_position, coord)
     unit_r = r / np.linalg.norm(r)

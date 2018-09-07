@@ -2,6 +2,7 @@ import numpy as np
 from Euler import rotation_matrix
 import time
 import csv
+import pandas as pd
 
 n = 32  # number of slices
 
@@ -71,146 +72,35 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-RTx = 0.015  # Tx radius (m)
-
-m = 20
+RTx = 0.005  # Tx radius (m)
+m = 10000
 Re = 1.0 / (2 * float(m))
 y_offset = 0.0
 
-configurations = [(([0, 0, 1], [1 / m * 2, 1 / m * 2, 1 / m * 2]), ([0, 0, 1], [1 / m * 2, 1 / m * 2, 0.15 + 1 / m * 2]), (
-[0, 0, 1], [1 + 1 / m * 2, 1 / m * 2, 1 / m * 2]))]  # A list containing the configurations wanting to be analysed
+configurations = [(([0, 0, 1], [0, 0, 0]), None ,([0, 0, 1], [1,1, 1]))]  # A list containing the configurations wanting to be analysed
 
 for config in configurations:
     (Tx1, Tx2, Rx) = config  # Tx is is the transmitter coils, Rx is the receiver coils.
     (Rx_axis, Rx_position) = Rx
     (Axis1, Tx_position1) = Tx1
     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
-    print("tick")
+    print(Hp)
 
+x_n = -3
+x_p = 0
+y_n = -1
+y_p = 1
+z_n = -2
+z_p = 0
 
+Ey = 0
+for i in range(x_n*m,x_p*m+1):
+    mag = Flux_dencity(Tx1, Tx2, RTx, [float(i)/m-0.00005,0,0])
+    Ey += mag[2]/m
+    print('X:',float(i)/m,'  -  ',Ey,'  -  ',mag[2]*1/m)
 
-    '''
-    f = open('2D-'+str(y_offset)+'_'+str(Tx1)+'_'+str(Tx2)+'_'+str(Rx)+'.csv', 'w')
-    f.write("x,y,result\n")
+for j in range(y_n*m,y_p*m+1):
+    print('Y:',float(j)/m)
 
-
-    for k in range(-1 * m, 0):
-        for i in range(-1 * m, 2 * m + 1):
-            r = [float(i) / m, y_offset, float(k) / m]
-
-
-            try:
-                Hr = Flux_dencity(Tx1, Tx2, RTx, r)
-
-
-                #Hs = Flux_dencity((Hr, r), None, Re, Rx_position)  # Check for magnitude of Hr in Flux_dencity()
-                holder = np.cross(r,Hr)
-                dL_hat = holder/np.linalg.norm(holder)
-                Current = np.dot(np.linalg.norm(Hr), dL_hat)
-
-                Hs = np.dot(np.linalg.norm(Hr),small_flux(r, Current,Rx_position))
-                result = (np.linalg.norm(Hr) * (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp)))   # Change factor
-
-                #print(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result))
-                f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
-            except RuntimeWarning:
-                print("Error")
-                pass
-        print(k)
-    f.close()
-
-    # Simple 2D
-
-
-    f = open('Simple-2D'+'.csv', 'w')
-    f.write("x,y,result\n")
-    for k in range(-1 * m, 0):
-        sum = 0
-        for i in range(-1 * m, 2 * m + 1):
-            r = [float(i) / m, y_offset, float(k) / m]
-            result = (1/(np.linalg.norm(r)**2))*(1/(np.linalg.norm(np.subtract([1, 0, 0], r)**2)))
-
-
-
-            if float(i) / m < 0 or float(i) / m > 1:
-                result = -result
-
-            result = result*np.linalg.norm(np.dot([0,0,1],np.subtract([1, 0, 0], r) / np.linalg.norm(np.subtract([1, 0, 0], r))))
-
-
-            sum += result
-            f.write(str(i / float(m)) + "," + str(k / float(m)) + "," + str(result) + "\n")
-        print(sum)
-    f.close()
-
-    '''
-
-    print("tock")
-
-
-    k_file = open('3D_Current_dL' + str(y_offset) + '_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
-
-    f = open('1D_TODAY='+str(m)+'_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv', 'w')
-    f.write("z,result\n")
-
-    for k in range(-2*m, 0):
-        layer = 0
-        for i in range(-4 * m, 4 * m):
-            for j in range(-4 * m, 4 * m):
-                r = [float(i) / m, float(j) / m, float(k) / m]
-                [x, y, z] = r
-                Hr = Flux_dencity(Tx1, Tx2, RTx, r)     # RTx is the Radius of Tx - r is the position of the point in question
-                #print(Hr)
-                holder = np.cross(r, Hr)
-                dL_hat = holder / np.linalg.norm(holder)
-                Current = np.dot(np.linalg.norm(Hr),dL_hat)
-                #  print(str(r)+" - "+str(np.linalg.norm(Hr)))
-                [u, v, w] = Current
-
-                k_file.write("%s ,%s ,%s ,%s ,%s ,%s \n" % (x, y, z, u, v, w))
-
-                Hs = np.dot(np.linalg.norm(Hr),small_flux(r, Current,Rx_position))
-
-
-                layer += np.linalg.norm(Hr)* (np.dot(Rx_axis, Hs) / np.dot(Rx_axis, Hp))  # Change factor - be sure that we include ohms law in the calculations
-
-
-        print(str(k / float(m))+ ', ' +str(layer*10**8))
-        f.write(str(k / float(m)) + "," + str(layer*10**8) + "\n")
-    f.close()
-
-
-
-plot_vector = []
-
-with open('3D_Current_dL' + str(y_offset) + '_' + str(Tx1) + '_' + str(Tx2) + '_' + str(Rx) + '.csv') as csvfile:
-    readCSV = csv.reader(csvfile, delimiter=',')
-    for row in readCSV:
-        try:
-            row_float = [float(i) for i in row]
-            plot_vector.append(row_float)
-        except:
-            pass
-    plot_vector.pop(0)
-
-
-the_z = 0
-sum = None
-for [x, y, z, u, v, w] in plot_vector:
-    coord = [x, y, z]
-    current = [u, v, w] 
-
-    r = np.subtract(Rx_position, coord)
-    unit_r = r / np.linalg.norm(r)
-    B = np.cross(current, unit_r) / (np.linalg.norm(r)) ** 2
-
-    response = np.dot(Rx_axis, B)
-    if the_z == z:
-        sum += response
-    else:
-        print("%s, %s" % (the_z, sum))
-        sum = 0
-        the_z = z
-        sum += response
-
-    #print(response)
+for k in range(z_n*m,z_p*m+1):
+    print('Z:',float(k)/m)

@@ -5,7 +5,7 @@ import csv
 import pandas as pd
 import matplotlib.pyplot as plt
 
-n = 128  # number of slices
+n = 1024  # number of slices
 
 EC = 25
 permeability = np.pi * 4 * 10 ** (-7)
@@ -73,69 +73,109 @@ def Flux_dencity(Tx1, Tx2, RTx, r):
     return sum
 
 
-
-m = 1000
+# initial perameters
+m = 10000
 m_step = 1.0/(m*2)
-m_step
-RTx = 0.005+m_step  # Tx radius (m)
-RTx
+
+RTx = 0.005  # Tx radius (m)
+
 Re = 1.0 / (2 * float(m))
 y_offset = 0.0
 
-configurations = [(([0, 0, 1], [0, 0, 0]), None ,([0, 0, 1], [1,1, 1]))]  # A list containing the configurations wanting to be analysed
+# configurations = [(([0, 0, 1], [0, 0, 0]), None ,([0, 0, 1], [1,1, 1]))]  # A list containing the configurations wanting to be analysed
+#
+# for config in configurations:
+#     (Tx1, Tx2, Rx) = config  # Tx is is the transmitter coils, Rx is the receiver coils.
+#     (Rx_axis, Rx_position) = Rx
+#     (Axis1, Tx_position1) = Tx1
+#     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
+#     print(Hp)
 
-for config in configurations:
-    (Tx1, Tx2, Rx) = config  # Tx is is the transmitter coils, Rx is the receiver coils.
-    (Rx_axis, Rx_position) = Rx
-    (Axis1, Tx_position1) = Tx1
-    Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
-    print(Hp)
-
-x_n = -10
-x_p = 0.1
+x_n = 0
+x_p = 2
 y_n = -1
 y_p = 1
-z_n = -0.01
+z_n = -4
 z_p = 0
 
 dE = [0,0,0]
 E = 0
 x=[]
-y=[]
-for i in range(int(x_n*m)+1,int(x_p*m)+1):
-    r = [float(i)/m,0,0]
+y=[0]
+z=[]
+Bz=[]
+sum = 0
+
+for k in range(int(z_n*m),int(z_p*m+1)):
+    sum +=Flux_dencity(Tx1, Tx2, RTx, [0,0,float(k)/m-m_step])[2]/(m)
+    if k%0.1*m == 0:
+        print('Z:',float(k)/m, 'B', sum)
+    if k > -0.05*m :
+        z.append(sum)
+
+start = z[len(z)-1]
+E=start
+for i in range(int(x_n*m),int(x_p*m)):
+    r = [float(i)/m+m_step,0,0]
     mag = Flux_dencity(Tx1, Tx2, RTx, r)
     r_hat =r / np.linalg.norm(r)
-
 
     dE = np.cross(r_hat,mag)
 
     E+=dE[1]/m
-    print('X:',float(i)/m,'  -  ',E,'  -  ',mag[2]*1/m)
+    k=i
+
+    #print('Z:',float(k)/m, 'B', sum)
+
+
+    print('X:',float(i+1)/m,'  -  ',E,'  -  ',mag[2]*1/m)
     if -0.05*m<i<0.05*m:
         x.append(float(i)/m)
         y.append(E)
+        Bz.append(mag[2]*1/m)
 
 
-print(Flux_dencity(Tx1, Tx2, RTx, [0,0,0])[2]/(m))
+print('Finished.')
+#print(Flux_dencity(Tx1, Tx2, RTx, [0,0,0])[2]/(m))
 
-(-6.14586631254/-1.25688945198)*np.pi
 
--6.14586631254*np.pi
-(-1.25688945198*m/np.pi*2)
-
-#Adding axis labels
-plt.xlabel('x')
-plt.ylabel('r_hat cross Ey')
-#adding title
-plt.title('Ey along the X-asis')
-
-plt.plot(x,y,'-',c='red')
-plt.plot(0.005,0,'o')
-plt.plot(-0.005,0,'o')
-plt.show()
-# for j in range(y_n*m,y_p*m+1):
-#     print('Y:',float(j)/m)
+# Bz
+# len(Bz)
 #
-# for k in range(int(z_n*m),z_p*m+1):
-#     print('Z:',float(k)/m, 'B', Flux_dencity(Tx1, Tx2, RTx, [0,0,float(k)/m])/(m))
+# len(x)
+# len(y)
+#
+# Bz_check = []
+# for j in range(0,len(y)-1):
+#     print(j)
+#     print(y[j+1] - y[j])
+#     Bz_check.append(y[j+1] - y[j])
+# y.pop(0)
+# len(Bz_check)
+#
+#
+# for a in range(len(Bz_check)):
+#     print(round(Bz_check[a],8) == round(Bz[a],8))
+#
+# #Adding axis labels
+# plt.xlabel('x or z axis')
+# plt.ylabel('Electric field')
+# #adding title
+# plt.title('Ey along the X-asis')
+#
+#
+# plt.plot(x,y,'-',c='red',label = "Ey on x")
+# plt.plot(x,z,'-',c='purple',label = "Exy on z")
+# plt.plot(x,Bz,'-',c='yellow',label = "dEy/dx on x")
+# plt.plot(x,Bz_check,'-',c='blue',label = "dEy/dx on x check")
+# plt.plot(0.005,0,'o')
+# plt.plot(-0.005,0,'o')
+# plt.legend(loc ='lower left')
+# plt.show()
+# # for j in range(y_n*m,y_p*m+1):
+# #     print('Y:',float(j)/m)
+# #
+# sum = 0
+# for k in range(int(z_n*m),int(z_p*m+1)):
+#     sum +=Flux_dencity(Tx1, Tx2, RTx, [0,0,float(k)/m-m_step])[2]/(m)
+#     print('Z:',float(k)/m, 'B', sum)

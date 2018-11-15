@@ -123,7 +123,7 @@ x_temp = []
 y_temp = []
 z_temp = []
 
-
+number = 0
 
 for k in z:
     x_temp = [0]
@@ -178,7 +178,7 @@ plt.show()
 
 
 ax = plt.axes(projection='3d')
-ax.scatter(x_data, z_data, z_data)#,cmap='viridis', edgecolor='none');
+ax.scatter(x_data, z_data, z_data)  #,cmap='viridis', edgecolor='none');
 
 
 # import scipy.interpolate as interp
@@ -190,7 +190,6 @@ ax.scatter(x_data, z_data, z_data)#,cmap='viridis', edgecolor='none');
 # fig = plt.figure()
 # ax = fig.add_subplot(111, projection='3d')
 # ax.plot_surface(plotx,ploty,plotz,cstride=1,rstride=1,cmap='viridis')  # or 'hot'
-
 
 
 
@@ -217,8 +216,6 @@ for i in range(int(x_n*m),int(x_p*m)):
 
 print('Finished.')
 #print(Flux_dencity(Tx1, Tx2, RTx, [0,0,0])[2]/(m))
-
-
 
 #z.reverse()
 

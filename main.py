@@ -1,13 +1,13 @@
 import numpy as np
 from Euler import rotation_matrix
 import time
-import csv
-import pandas as pd
-%matplotlib inline
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+#import csv
+#import pandas as pd
+#%matplotlib inline
+#import matplotlib.pyplot as plt
+#from mpl_toolkits.mplot3d import Axes3D
 
-n = 64  # number of slices
+n = 128  # number of slices
 
 EC = 25
 permeability = np.pi * 4 * 10 ** (-7)
@@ -92,6 +92,8 @@ for config in configurations:
     (Axis1, Tx_position1) = Tx1
     Hp = Flux_dencity(Tx1, Tx2, RTx, Rx_position)
     print(Hp)
+
+'''
 
 x_n = 0
 x_p = 1
@@ -297,3 +299,4 @@ for k in range(int(z_n*m),int(z_p*m+1)):
 
 
 #z[1]-Flux_dencity(Tx1, Tx2, RTx, [m_step,0,0.0001])[2]/(m)
+'''

@@ -7,6 +7,7 @@ from Euler import rotation_matrix
 class Coil(object):
     # Put some of these into init
     coil_I = 1
+    coil_V = 12
 
 
     coil_position = [0,0,0]
